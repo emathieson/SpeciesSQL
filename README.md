@@ -4,4 +4,6 @@
 
 ### I have set up a personal SQL Server on my personal machine, and utilize SSMS.
 
-### To get the clearest picture of the flow and synergy of the tables and etls, please view the diagram I have made, which can be found here on my personal portfolio site:
+### To get the clearest picture of the flow and synergy of the tables and etls, please view the diagram I have made (with handy links if viewed as a pdf, which can be found [here](https://emathieson.github.io/PORTFOLIONEW/SpeciesSQL%20Diagram_.pdf) on my personal portfolio site. Screenshots for context also availabe through the diagram.
+
+### Thanks for looking!
