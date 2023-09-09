@@ -11,11 +11,7 @@ GO
 
 
 
-
-
-
-
-CREATE PROCEDURE [etl].[Load_stg_InsertToUniqueSpeciesID]
+CREATE OR ALTER PROCEDURE [etl].[Load_stg_InsertToUniqueSpeciesID]
 
 
 AS
@@ -30,21 +26,11 @@ Then the stage table data is inserted into the reference table, ref.UniqueSpecie
 LOG:
 Date		Owner		Message
 09.04.23	EMathieson	Push to Beta/ITFProd
+09.07.23	EMathieson	Cleanup for GIT
 
 */
 
 BEGIN TRY
-
---Log declarations
-DECLARE @ObjectName						SYSNAME		= OBJECT_NAME(@@PROCID)
-DECLARE @ObjectStart					DATETIME2	= GETDATE()
-DECLARE @RowsReturned					INT			= NULL
-DECLARE @ObjectEnd						DATETIME2	= NULL
-DECLARE @RunLogID						BIGINT		= NULL
-
---Begin logging, brum-brum-brum-brrrrrrr 
-EXEC util.RunLog_Insert @ObjectName,@ObjectStart,@ObjectEnd,@RowsReturned,@RunLogID,@RunLogIdOutput = @RunLogID OUTPUT
-
 ------------------------------------------------------------------------------yeehaw------------------------------------------------------------------------------------------------------
 
 
@@ -246,20 +232,9 @@ INSERT INTO ref.UniqueSpeciesID
 SELECT * FROM stg.InsertToUniqueSpeciesID
 
 ----------------------------------------------------------------------------end yeehaw----------------------------------------------------------------------------------------------------
-
---Logging end, TIMBER
-SET @RowsReturned		= @@ROWCOUNT
-SET @ObjectEnd			= GETDATE()
-
-
---Update your logs
-EXEC util.RunLog_Insert @ObjectName,@ObjectStart,@ObjectEnd,@RowsReturned,@RunLogID
-
 END TRY
 
 BEGIN CATCH
-	--Log your snags
-	EXEC util.ErrorLog_Insert @RunLogID
 
 	DECLARE @ErrMessage		NVARCHAR(4000)	= ERROR_MESSAGE()
 	DECLARE @ErrSeverity	INT				= ERROR_SEVERITY()
@@ -268,7 +243,3 @@ BEGIN CATCH
 	RAISERROR(@ErrMessage,  @ErrSeverity, @ErrState)
 
 END CATCH
-
-GO
-
-

@@ -26,18 +26,7 @@ Date		Owner		Message
 09.07.23	EMathieson	Cleanup for GIT
 
 */
-
 BEGIN TRY
---My variation of etl logging for troubleshooting
---ProcRunLog DECLARES
-DECLARE @ObjectName			SYSNAME		= OBJECT_NAME(@@PROCID)
-DECLARE @ObjectStart		DATETIME2	= GETDATE()
-DECLARE @RowsReturned		INT			= NULL
-DECLARE @ObjectEnd			DATETIME2	= NULL
-DECLARE @RunLogID			BIGINT		= NULL
-
---ProcRunLog START
-EXEC util.RunLog_Insert @ObjectName,@ObjectStart,@ObjectEnd,@RowsReturned,@RunLogID,@RunLogIdOutput = @RunLogID OUTPUT
 
 ------------------------------------------------------------------------------yeehaw------------------------------------------------------------------------------------------------------
 
@@ -309,22 +298,10 @@ SELECT * FROM #temp_union
 --Display table after insert
 SELECT * FROM Park.Acadia
 
-
-
 ----------------------------------------------------------------------------end yeehaw----------------------------------------------------------------------------------------------------
-
---ProcRunLog SET after values
-SET @RowsReturned		= @@ROWCOUNT
-SET @ObjectEnd			= GETDATE()
-
---ProcRunLog "UPDATE" logs via RunLog_Insert
-EXEC util.RunLog_Insert @ObjectName,@ObjectStart,@ObjectEnd,@RowsReturned,@RunLogID
-
 END TRY
 
 BEGIN CATCH
-	--ProcErrLog "UPDATE" logs via ErrorLog_Insert
-	EXEC util.ErrorLog_Insert @RunLogID
 
 	DECLARE @ErrMessage		NVARCHAR(4000)	= ERROR_MESSAGE()
 	DECLARE @ErrSeverity	INT				= ERROR_SEVERITY()
@@ -333,5 +310,3 @@ BEGIN CATCH
 	RAISERROR(@ErrMessage,  @ErrSeverity, @ErrState)
 
 END CATCH
-
-
