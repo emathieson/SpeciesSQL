@@ -6,4 +6,4 @@
 
 ### To get the clearest picture of the flow and synergy of the tables and etls, please view the diagram I have made (with handy links if viewed as a pdf, which can be found [here](https://emathieson.github.io/PORTFOLIONEW/SpeciesSQL%20Diagram_.pdf) on my personal portfolio site. Screenshots for context also availabe through the diagram.
 
-### Thanks for looking!
+### I am still working on collecting and entering data, so some fields will be empty.
